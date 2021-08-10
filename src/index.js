@@ -1,12 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./styles/index.css";
+import App from "./components/App";
+import reportWebVitals from "./reportWebVitals";
+
+const subjects = ["ddi", "daw", "poo"];
+const languages = { python: true, cs: false, php: true };
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+  <App
+    lastname="Salvador"
+    age={26}
+    name="Chalo"
+    languages={languages}
+    other={true}
+    subjects={subjects}
+  />,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

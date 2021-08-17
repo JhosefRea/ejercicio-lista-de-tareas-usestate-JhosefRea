@@ -1,9 +1,40 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import "../styles/todoList.css";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [completed, setCompleted] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    console.log("useEffect TodoList (en cada renderizado)");
+  }); // se ejecuta en cada renderizado del componente
+
+  useEffect(() => {
+    console.log("useEffect TodoList (solo cuando se monta)");
+  }, []); // si la lista de dependencias es vacía ([]) se ejecuta solo cuando se monta el componente
+
+  useEffect(() => {
+    console.log("useEffect TodoList (completed)");
+  }, [completed]); // se ejecuta solo cuando se actualiza la variable de estado "completed"
+
+  useEffect(() => {
+    console.log("useEffect TodoList (completed, todo)");
+    if (todos.length > 0) {
+      document.title = `Tienes ${todos.length} tareas pendientes`;
+    } else {
+      document.title = "No tienes tareas pendientes";
+    }
+  }, [todos]); // se ejecuta solo cuando se actualiza la variable de estado "completed" y "todos"
+
+  useEffect(() => {
+    if (darkMode) {
+      console.log("DARK");
+    } else {
+      console.log("LIGHT");
+    }
+  }, [darkMode]);
 
   const handleAddTask = () => {
     // const newTodo = document.querySelector("#todo").value;
@@ -29,8 +60,15 @@ const TodoList = () => {
     setCompleted((prevState) => [...prevState, taskToComplete]);
   };
 
+  const handleSetDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div>
+    <div className={darkMode ? "dark-mode" : ""}>
+      <button onClick={handleSetDarkMode}>
+        {darkMode ? "Desactivar" : "Activar"} modo oscuro
+      </button>
       <h1>Lista de tareas</h1>
       <div>
         <label htmlFor="todo">Nombre de la tarea</label>

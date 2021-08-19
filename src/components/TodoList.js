@@ -5,6 +5,7 @@ const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -35,6 +36,21 @@ const TodoList = () => {
       console.log("LIGHT");
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    console.log("SE MONTO EL COMPONENTE");
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      console.log("SE DESMONTO EL COMPONENTE");
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleResize = () => {
+    console.log("handleResize", window.innerWidth);
+    setWindowWidth(window.innerWidth);
+  };
 
   const handleAddTask = () => {
     // const newTodo = document.querySelector("#todo").value;
@@ -117,6 +133,8 @@ const TodoList = () => {
           ))}
         </ul>
       </div>
+
+      <h1>Ancho de la ventana: {windowWidth}</h1>
     </div>
   );
 };
